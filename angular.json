@@ -33,6 +33,11 @@
             "styles": [
               "src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/sass/"
+              ]
+            },
             "scripts": []
           },
           "configurations": {
@@ -49,6 +54,11 @@
                   "maximumError": "4kb"
                 }
               ],
+              "stylePreprocessorOptions": {
+                "includePaths": [
+                  "src/sass/"
+                ]
+              },
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -101,6 +111,11 @@
             "styles": [
               "src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/sass/"
+              ]
+            },
             "scripts": []
           }
         }

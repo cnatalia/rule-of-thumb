@@ -1,0 +1,114 @@
+
+ul,
+li {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  list-style: none;
+
+}
+.dropdown, .form-group{
+   width: 100%;
+   height: 100%;
+}
+.form-control{
+    width: 100%;
+    height: 100%;
+    border: 2px solid black; 
+    margin-bottom: 0;
+}
+.optionSelected_close {
+ 
+  background-color: white;
+}
+
+// .optionSelected_open {
+//     background-color: rgb(21, 185, 101);
+// }
+
+input {
+  cursor: pointer;
+  outline: none;
+
+}
+
+.label {
+  label {
+    font-size: 14px;
+    display: block;
+    padding: 5px;
+    padding-left: 10px;
+    color: #7b7b7b;
+    background-color: rgba(197,236,191, 0.5);
+    border-radius: 8px;
+    margin: 5px 8px 0px;
+  }
+
+}
+
+.invalid {
+  background: transparent;
+}
+
+.options {
+  position: relative;
+  background: #ffffff;
+  z-index: 3;
+  width: 100%;
+  border: 2px solid black;
+  border-top: 0;
+  height: auto;
+
+  max-height: 240px;
+
+  .itemOptions {
+    font-family: 'interRegular', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    height: 37px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: black;
+
+    &:first-child {
+        border-bottom: 2px solid black;
+    }
+
+    &:hover {
+      background-color: #f5f5f5;
+    }
+
+  }
+
+  &::-webkit-scrollbar {
+    width: 4px;
+    /* Tamaño del scroll en vertical */
+    height: 20px;
+    /* Tamaño del scroll en horizontal */
+
+
+    /* Ocultar scroll */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #11b719;
+    border-radius: 4px;
+  }
+}
+
+.active {
+  background-color: #f5f5f5;
+  font-weight: 700;
+}
+
+.display-none {
+  display: none;
+}
+
+.display-block {
+  display: block;
+}

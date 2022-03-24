@@ -1,0 +1,13 @@
+<div class="dropdown">
+    <div class="form-group">
+      <input readonly class="form-control optionSelected_close mt-0" [class.valid]="isValid(this)"
+         type="text" [value]="inputText" (click)="getOptions(this.id)" id="{{this.id}}_input">
+      <ul  class="options display-none" (mouseleave)="isFocused(this.id)" id="{{this.id}}">
+       <div  *ngIf="list">
+         <li *ngFor="let channel of list" id="{{channel.id}}" class="itemOptions"
+          (click)="selectOption(this.id, channel.value, channel.id)">{{channel.value}}
+        </li>
+       </div> 
+      </ul>
+    </div>
+  </div>

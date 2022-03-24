@@ -1,16 +1,25 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CharacterComponent } from './components/character/character.component';
+import { CoreComponent } from './components/core/core.component';
+import { DropdownComponent } from './components/dropdown/dropdown.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CharacterComponent,
+    CoreComponent,
+    DropdownComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

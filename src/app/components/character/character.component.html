@@ -1,0 +1,41 @@
+<div id="{{id}}" class="character {{view}} character-bottom" role="doc-tip" aria-label="Submit a name">
+    
+    <img
+        srcset="assets/img/{{picture}}"
+        sizes="(min-width: 750px) 1440px, 100vw"
+        class="character__background" src="assets/img/bg-people.png"
+        alt=""
+        role="none">
+        <div class="character__information">
+            <div class="character__left">
+                <div class="character__left--status character__status--down"></div>
+                <p class="character__presentation">
+                    <span class="character__heading" >{{name}}</span>
+                    <span class="character__description">{{description}}</span>
+                </p>
+              </div>
+            <div class="character__right">
+                <p class="character__time">1 month ago in {{category}}</p>
+                <div class="character__button character__button--up"></div>
+                <div class="character__button character__button--down"></div>
+                <button class="character__cta">
+                    Vote Now
+                </button>
+            </div>
+        </div>
+
+    <div class="character__votes">
+        <div class="character__votes--background"></div>
+        <div class="character__votes--up" [style.width]="drawPercentage(positive, total)+'%'"></div>
+        <div class="character__percentage">
+            <div class="character__percentage--left">
+                <img class="character__percentage__img" src="/assets/img/thumbs-up.svg" alt="">
+                <span class="character__percentage__span">{{this.getPercentage(this.positive, this.total)}}%</span>
+            </div>
+           <div class="character__percentage-rigth">
+                <img class="character__percentage__img" src="/assets/img/thumbs-down.svg" alt="">
+                <span class="character__percentage__span">{{this.getPercentage(this.negative, this.total)}}%</span>
+           </div>
+        </div>
+    </div>
+</div>
