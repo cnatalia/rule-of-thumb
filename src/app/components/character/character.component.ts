@@ -18,9 +18,14 @@ export class CharacterComponent implements OnInit {
   public votes: any[] = []
   public percentage: number = 0;
   public form;
-  public dataInitial:any;
-  public hasVoted:boolean = false;
-  public _lastUpdated:any;
+  public dataInitial: any;
+  public hasVoted: boolean = false;
+  public _lastUpdated: any;
+  public _positive: any;
+  public _negative: any;
+  public percPositivo: any;
+  public percNegativo: any;
+  public _total: any;
 
   @Input() name: string = "";
   @Input() description: string = "";
@@ -40,7 +45,7 @@ export class CharacterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private cookies: CookieService
   ) {
-  
+
     this.form = this.formBuilder.group({
       vote: ''
     });
@@ -48,14 +53,21 @@ export class CharacterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._lastUpdated = this.cookies.get('data') ? this.setLastUpdate(JSON.parse(this.cookies.get('data')), this.id ): moment(this.lastUpdated).startOf('day').fromNow()
-
+    this._lastUpdated = this.cookies.get('data') ? this.setLastUpdate(JSON.parse(this.cookies.get('data')), this.id) : moment(this.lastUpdated).startOf('day').fromNow()
+    //console.log(auxpo)
+    
+    this._negative = this.cookies.get('data') ? this.getVotes(JSON.parse(this.cookies.get('data')), this.id, 'negative') : this.negative
+    this._positive = this.cookies.get('data') ? this.getVotes(JSON.parse(this.cookies.get('data')), this.id, 'positive') : this.positive
+    this._total = this._negative + this._positive
+    this.percPositivo=  this.getPercentage(this._positive, this._total)
+    this.percNegativo=  this.getPercentage(this._negative, this._total)
+    console.log(this._negative)
   }
 
-  public populateCharacter(){
+  public populateCharacter() {
 
-    this.populate.getData().subscribe( data =>  {
-     
+    this.populate.getData().subscribe(data => {
+
       this.dataInitial = data
       //this.cookies.set('data', JSON.stringify(this.characteres));
     })
@@ -67,6 +79,19 @@ export class CharacterComponent implements OnInit {
 
   }
 
+
+
+  getVotes(array:any, id:any, type:string) {
+    let aux ;
+    array.map(
+      (value:any) =>{
+         value.id === id ? aux = value.votes[type] : ''
+    } )
+  
+    return aux;
+   
+  }
+
   getPercentage(value: number, total: number) {
 
     return ((100 * value) / total).toFixed(2)
@@ -75,96 +100,72 @@ export class CharacterComponent implements OnInit {
   onSubmit(value: any, id: string) {
     console.log(value.vote, id)
     this.changeState(id, 'vote')
-    this.setVote( Number(id), value.vote)
+    this.setVote(Number(id), value.vote)
   }
 
-  voteAgain(id:string){
+  voteAgain(id: string) {
     this.changeState(id, 'again')
   }
 
-  public setVote(characterID:number, type:string) {
-   
-    this.populate.getData().subscribe( data =>  {
+  public setVote(characterID: number, type: string) {
+
+    this.populate.getData().subscribe(data => {
       let dataUpdate;
       let idTime = "time_" + characterID;
       let time = document.getElementById(idTime)
 
       this.dataInitial = this.cookies.get('data') ? JSON.parse(this.cookies.get('data')) : data
 
-      if(type==='positive'){
-        dataUpdate = this.dataInitial.map((p:any) =>
-        p.id === characterID 
-           ? { ...p, 
-            lastUpdated:moment().format(),
-            votes: {...p.votes, positive: p.votes.positive+1}, 
-            total: p.total+1 }
-           : p
-       );
-      }else{
-        dataUpdate = this.dataInitial.map((p:any) =>
-        p.id === characterID 
-           ? { ...p, 
-            lastUpdated:moment().format(),
-            votes: {...p.votes, negative: p.votes.negative+1}, 
-            total: p.total+1 }
-           : p
-       );
+      if (type === 'positive') {
+        dataUpdate = this.dataInitial.map((p: any) =>
+          p.id === characterID
+            ? {
+              ...p,
+              lastUpdated: moment().format(),
+              votes: { ...p.votes, positive: p.votes.positive + 1 },
+              total: p.total + 1
+            }
+            : p
+        );
+      } else {
+        dataUpdate = this.dataInitial.map((p: any) =>
+          p.id === characterID
+            ? {
+              ...p,
+              lastUpdated: moment().format(),
+              votes: { ...p.votes, negative: p.votes.negative + 1 },
+              total: p.total + 1
+            }
+            : p
+        );
       }
       console.log(dataUpdate)
 
-     this.cookies.set('data',JSON.stringify(dataUpdate))
-     this._lastUpdated = this.setLastUpdate(dataUpdate, characterID)
-
+      this.cookies.set('data', JSON.stringify(dataUpdate))
+      this._lastUpdated = this.setLastUpdate(dataUpdate, characterID)
+      this._negative = this.cookies.get('data') ? this.getVotes(JSON.parse(this.cookies.get('data')), this.id, 'negative') : this.negative
+      this._positive = this.cookies.get('data') ? this.getVotes(JSON.parse(this.cookies.get('data')), this.id, 'positive') : this.positive
+      this.percPositivo=  this.getPercentage(this._positive, this._total)
+      this.percNegativo=  this.getPercentage(this._negative, this._total)
     })
 
   }
 
-  public setLastUpdate(array:any, id: any){
-    // var nacimiento=moment("2010-01-03");
-    // var hoy=moment();
-    // var anios=hoy.diff(nacimiento,"years");
-let aux = array.find((data:any) => data.id === id)?.lastUpdated
+  public setLastUpdate(array: any, id: any) {
+;
+    let aux = array.find((data: any) => data.id === id)?.lastUpdated
 
 
     return moment(aux).fromNow();
 
   }
 
-  public changeState(id: string, state:string) {
-    let idButton = "button_" + id;
-    let idButtonAgain = "button_again_" + id;
-    let button = document.getElementById(idButton)
-    let buttonAgain = document.getElementById(idButtonAgain)
-    let idRadioP = "positiveLabel_" + id;
-    let idRadioN = "negativeLabel_" + id;
+  public changeState(id: string, state: string) {
+  
+    let formId = "votes_" + id
+    let form = document.getElementById(formId)
 
-    let idTime = "time_" + id;
-    let idTimeAgain = "time_again_" + id;
-
-    let positiveVote = document.getElementById(idRadioP)
-    let negativeVote = document.getElementById(idRadioN)
-    let time = document.getElementById(idTime)
-    let timeAgain = document.getElementById(idTimeAgain)
-
-    if (state === 'vote') {
-
-      positiveVote!.style.display = 'none'
-      negativeVote!.style.display = 'none'
-      button!.style.display = 'none'
-      buttonAgain!.style.display = 'inline-block'
-      timeAgain!.style.display = 'inline-block'
-      time!.style.display = 'none'
-    } else {
-
-      positiveVote!.style.display = 'inline-block'
-      negativeVote!.style.display = 'inline-block'
-      buttonAgain!.style.display = 'none'
-      button!.style.display = 'inline-block'
-      time!.style.display = 'inline-block'
-      timeAgain!.style.display = 'none'
-    }
-
-
+    form!.className = state === 'vote' ? "character__right character__form--again" : "character__right character__form--new";
 
   }
 

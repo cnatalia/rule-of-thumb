@@ -178,10 +178,12 @@ margin: 0
     height: 35px;
     position: relative;
     opacity: 0.8;
+    display: flex;
     @media (min-width: 768px){
         position: absolute;
         bottom: 0;
         z-index: 3;
+      
     }
     @media (min-width: 1100px){
         height: 50px;
@@ -197,12 +199,16 @@ margin: 0
     align-items: center;
 }
 
-.character__votes--up{
+.character__votes--up, .character__votes--down{
     width: 50%;
     height: 100%;
     background-color: $color-green-positive;
     position: relative;
 
+}
+
+.character__votes--down{
+    background: $color-yellow-negative;
 }
 
 .character__percentage{
@@ -261,6 +267,29 @@ form{
 }
 .character__cta-hidden, .character__time--hidden{
     display: none;
+}
+
+.character__form--new{
+    .character__cta-visible, .character__button--up, .character__button--down, .character__time--visible{
+        display: inline-block;
+    }
+
+    .character__cta-hidden, .character__time--hidden{
+        display: none;
+    }
+
+}
+
+.character__form--again{
+    .character__cta-hidden{
+        display: inline-block;
+    }
+    .character__time--hidden{
+        display: block;
+    }
+    .character__cta-visible, .character__button--up, .character__button--down, .character__time--visible{
+        display: none;
+    }
 }
 //view grid
 .character.grid{
@@ -324,6 +353,7 @@ form{
         height: 35px;
         position: relative;
         opacity: 0.8;
+        
     }
     .character__background{
         position: absolute;
