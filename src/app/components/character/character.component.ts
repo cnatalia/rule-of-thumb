@@ -98,7 +98,6 @@ export class CharacterComponent implements OnInit {
   }
 
   onSubmit(value: any, id: string) {
-    console.log(value.vote, id)
     this.changeState(id, 'vote')
     this.setVote(Number(id), value.vote)
   }

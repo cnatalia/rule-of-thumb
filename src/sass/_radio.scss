@@ -11,6 +11,11 @@
     cursor: pointer;
     line-height: 20px;
     color: #666;
+    margin-right: 10px;
+    @media (min-width: 1100px){
+        margin-right: 30px;
+    }
+
 }
 [type="radio"]:checked + label:before,
 [type="radio"]:not(:checked) + label:before {

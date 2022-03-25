@@ -148,14 +148,7 @@ margin: 0
     }
 }
 
-.character__cta.inactive{
-    background-color: $color-darker-gray  ;
-}
 
-.character__cta.active{
-    background-color: $color-dark-gray  ;
-    cursor: pointer;
-}
 
 .character__time{
     color: white;
@@ -260,15 +253,25 @@ form{
 
     width: 190px;
     align-items: flex-start;
-    justify-content: space-between;
+    justify-content: flex-end;
     @media (min-width: 1100px){
         width: 250px;
     }
+}
+.character__cta-hidden{
+    width: 134px !important;
 }
 .character__cta-hidden, .character__time--hidden{
     display: none;
 }
 
+.character__cta.active{
+    background-color: $color-darker-gray  ;
+}
+
+.character__cta.inactive{
+    background-color: $color-dark-gray  ;
+}
 .character__form--new{
     .character__cta-visible, .character__button--up, .character__button--down, .character__time--visible{
         display: inline-block;
@@ -278,6 +281,8 @@ form{
         display: none;
     }
 
+  
+    
 }
 
 .character__form--again{
@@ -290,6 +295,7 @@ form{
     .character__cta-visible, .character__button--up, .character__button--down, .character__time--visible{
         display: none;
     }
+  
 }
 //view grid
 .character.grid{
