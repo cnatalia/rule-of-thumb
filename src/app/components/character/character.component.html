@@ -14,13 +14,24 @@
                     <span class="character__description">{{description}}</span>
                 </p>
               </div>
-            <div class="character__right">
-                <p class="character__time">1 month ago in {{category}}</p>
-                <div class="character__button character__button--up"></div>
-                <div class="character__button character__button--down"></div>
+            <div class="character__right" id="votes_{{id}}">
+                <p class="character__time" id="time_{{id}}">1 month ago in {{category}}</p>
+                <form [formGroup]="form"   novalidate>
+                   
+                    <input required type="radio" formControlName="vote" 
+                    action="Autenticacion" category="TDCPopular" label="RadioResidencialFiscal" id="positive_{{id}}" value="positive">
+                    <label id="positiveLabel_{{id}}" class=" character__button character__button--up positive_{{id}}" for="positive_{{id}}"></label>
+                    <input  class="" type="radio"  formControlName="vote" id="negative_{{id}}" value="negative">
+                    <label id="negativeLabel_{{id}}" class="character__button character__button--down negative_{{id}}" for="negative_{{id}}"></label>
+                    <button id="button_{{id}}" [ngClass]="{'inactive':!form.valid, 'active': form.valid }" [disabled]="!form.valid" class=" character__cta" (click)="onSubmit(form.value, id)" type="submit">
+                        Vote Now
+                    </button>
+                </form>
+                <!-- <div class="character__button character__button--up"></div>
+                <div class="character__button character__button--down"></div> 
                 <button class="character__cta">
                     Vote Now
-                </button>
+                </button>-->
             </div>
         </div>
 

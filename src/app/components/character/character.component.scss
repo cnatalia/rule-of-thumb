@@ -1,5 +1,6 @@
 
 @import "variables";
+@import "radio";
 .banner-bottom{
 margin: 0
 }
@@ -92,7 +93,7 @@ margin: 0
   
 }
 
-.character__button, .character__left--status{
+.character__button:before, .character__button:after, .character__left--status{
    
     width: 31px;
     height: 31px;
@@ -114,21 +115,26 @@ margin: 0
 .character__background{
     opacity: 1;
 }
-.character__button--up, .character__status--up{
+.character__button--up:before, .character__status--up, .character__button--up:after{
     background-image: url(/assets/img/thumbs-up.svg);
     background-color: $color-green-positive;
+    
 }
 
-.character__button--down, .character__status--down{
+.character__button--down:before, .character__status--down, .character__button--down:after{
     background-image: url(/assets/img/thumbs-down.svg);
     background-color: $color-yellow-negative;
 }
+
+.character__button--down:after, .character__button--up:after{
+   border: 2px solid white;
+}
+
 
 .character-bottom .character__cta{
     width: 108px;
     padding: 0.6rem 0;
     font-size: 1.3rem;
-    background-color: $color-darker-gray  ;
     color: white;
     opacity: .8;
     padding: .8rem;
@@ -140,6 +146,15 @@ margin: 0
         line-height: 45px;
         padding: 0;
     }
+}
+
+.character__cta.inactive{
+    background-color: $color-darker-gray  ;
+}
+
+.character__cta.active{
+    background-color: $color-dark-gray  ;
+    cursor: pointer;
 }
 
 .character__time{
@@ -231,6 +246,17 @@ height: 100%;
         z-index: 1;
         pointer-events: none;
    
+    }
+}
+
+form{
+    display: flex;
+
+    width: 190px;
+    align-items: flex-start;
+    justify-content: space-between;
+    @media (min-width: 1100px){
+        width: 250px;
     }
 }
 
