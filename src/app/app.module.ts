@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { CharacterComponent } from './components/character/character.component';
 import { CoreComponent } from './components/core/core.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { DropdownComponent } from './components/dropdown/dropdown.component';
 		ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

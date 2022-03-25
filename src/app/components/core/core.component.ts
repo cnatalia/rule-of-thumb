@@ -3,7 +3,7 @@ import { map } from 'rxjs';
 import { VotesResponse } from 'src/app/models/votes-response';
 import { PopulateService } from 'src/app/services/populate/populate.service';
 import { VotesService } from 'src/app/services/votes/votes.service';
-
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-core',
@@ -19,13 +19,15 @@ export class CoreComponent implements OnInit {
 
   constructor(
     private populate : PopulateService,
-    private votesService: VotesService
+    private votesService: VotesService,
+    private cookies: CookieService
   ) {
     this.populateCharacter()
     //this.drawVotes()
    }
 
   ngOnInit(): void {
+    
   }
  
   public populateCharacter(){
@@ -33,7 +35,7 @@ export class CoreComponent implements OnInit {
     this.populate.getData().subscribe( data =>  {
      
       this.characteres = data
-    console.log(this.characteres)
+      this.cookies.set('data',JSON.stringify(this.characteres));
       
     })
 
