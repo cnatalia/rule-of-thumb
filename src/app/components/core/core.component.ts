@@ -35,8 +35,7 @@ export class CoreComponent implements OnInit {
     this.populate.getData().subscribe( data =>  {
      
       this.characteres = data
-      this.cookies.set('data',JSON.stringify(this.characteres));
-      
+      //this.cookies.set('data', JSON.stringify(this.characteres));
     })
 
   }

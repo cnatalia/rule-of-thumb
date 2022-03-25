@@ -15,7 +15,8 @@
                 </p>
               </div>
             <div class="character__right" id="votes_{{id}}">
-                <p class="character__time" id="time_{{id}}">1 month ago in {{category}}</p>
+                <p class="character__time character__time--hidden" id="time_again_{{id}}">Thank you for your vote!</p>
+                <p class="character__time" id="time_{{id}}">{{this._lastUpdated}} in {{category}}</p>
                 <form [formGroup]="form"   novalidate>
                    
                     <input required type="radio" formControlName="vote" 
@@ -25,6 +26,9 @@
                     <label id="negativeLabel_{{id}}" class="character__button character__button--down negative_{{id}}" for="negative_{{id}}"></label>
                     <button id="button_{{id}}" [ngClass]="{'inactive':!form.valid, 'active': form.valid }" [disabled]="!form.valid" class=" character__cta" (click)="onSubmit(form.value, id)" type="submit">
                         Vote Now
+                    </button>
+                    <button id="button_again_{{id}}" [ngClass]="{'inactive':!form.valid, 'active': form.valid }" class="character__cta character__cta-hidden" (click)="voteAgain(id)">
+                        Vote Again
                     </button>
                 </form>
                 <!-- <div class="character__button character__button--up"></div>

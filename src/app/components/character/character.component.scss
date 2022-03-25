@@ -259,7 +259,9 @@ form{
         width: 250px;
     }
 }
-
+.character__cta-hidden, .character__time--hidden{
+    display: none;
+}
 //view grid
 .character.grid{
     margin: 0;
