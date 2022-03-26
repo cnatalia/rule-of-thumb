@@ -4,6 +4,14 @@ import { FormBuilder } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import * as moment from 'moment';
 
+const CLASS_THUMB_UP = 'character__left--status character__status--up';
+const CLASS_THUMB_DOWN =  'character__left--status character__status--down';
+const CLASS_VOTED = 'character__right character__form--again';
+const CLASS_NOT_VOTED = 'character__right character__form--new';
+const NEGATIVE_OPTION = 'negative';
+const POSITIVE_OPTION = 'positive';
+const ID_COOKIE = 'data';
+
 @Component({
   selector: 'app-character',
   templateUrl: './character.component.html',
@@ -19,6 +27,7 @@ export class CharacterComponent implements OnInit {
   public percPositivo: any;
   public percNegativo: any;
   public _total: any;
+  public thumbStatus: string ='';
 
   @Input() name: string = "";
   @Input() description: string = "";
@@ -44,13 +53,14 @@ export class CharacterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._lastUpdated = this.cookies.get('data') ? this.setLastUpdate(JSON.parse(this.cookies.get('data')), this.id) : moment(this.lastUpdated).startOf('day').fromNow()
+    this._lastUpdated = this.cookies.get(ID_COOKIE) ? this.setLastUpdate(JSON.parse(this.cookies.get(ID_COOKIE)), this.id) : moment(this.lastUpdated).startOf('day').fromNow()
 
-    this._negative = this.cookies.get('data') ? this.getVotes(JSON.parse(this.cookies.get('data')), this.id, 'negative') : this.negative
-    this._positive = this.cookies.get('data') ? this.getVotes(JSON.parse(this.cookies.get('data')), this.id, 'positive') : this.positive
+    this._negative = this.cookies.get(ID_COOKIE) ? this.getVotes(JSON.parse(this.cookies.get(ID_COOKIE)), this.id, NEGATIVE_OPTION) : this.negative
+    this._positive = this.cookies.get(ID_COOKIE) ? this.getVotes(JSON.parse(this.cookies.get(ID_COOKIE)), this.id, POSITIVE_OPTION) : this.positive
     this._total = this._negative + this._positive
     this.percPositivo = this.getPercentage(this._positive, this._total)
     this.percNegativo = this.getPercentage(this._negative, this._total)
+    this.thumbStatus = this._positive > this._negative ? CLASS_THUMB_UP : CLASS_THUMB_DOWN
   }
 
   public populateCharacter() {
@@ -91,7 +101,7 @@ export class CharacterComponent implements OnInit {
 
     this.populate.getData().subscribe(data => {
       let dataUpdate;
-      this.dataInitial = this.cookies.get('data') ? JSON.parse(this.cookies.get('data')) : data
+      this.dataInitial = this.cookies.get(ID_COOKIE) ? JSON.parse(this.cookies.get(ID_COOKIE)) : data
 
       dataUpdate = this.dataInitial.map((p: any) =>
         p.id === characterID
@@ -105,12 +115,13 @@ export class CharacterComponent implements OnInit {
       );
 
 
-      this.cookies.set('data', JSON.stringify(dataUpdate))
+      this.cookies.set(ID_COOKIE, JSON.stringify(dataUpdate))
       this._lastUpdated = this.setLastUpdate(dataUpdate, characterID)
-      this._negative = this.cookies.get('data') ? this.getVotes(JSON.parse(this.cookies.get('data')), this.id, 'negative') : this.negative
-      this._positive = this.cookies.get('data') ? this.getVotes(JSON.parse(this.cookies.get('data')), this.id, 'positive') : this.positive
+      this._negative = this.cookies.get(ID_COOKIE) ? this.getVotes(JSON.parse(this.cookies.get(ID_COOKIE)), this.id, NEGATIVE_OPTION) : this.negative
+      this._positive = this.cookies.get(ID_COOKIE) ? this.getVotes(JSON.parse(this.cookies.get(ID_COOKIE)), this.id, POSITIVE_OPTION) : this.positive
       this.percPositivo = this.getPercentage(this._positive, this._total)
       this.percNegativo = this.getPercentage(this._negative, this._total)
+      this.changeStateThumb(String(characterID), this._positive > this._negative )
     })
 
   }
@@ -126,10 +137,16 @@ export class CharacterComponent implements OnInit {
     let formId = "votes_" + id
     let form = document.getElementById(formId)
 
-    form!.className = state === 'vote' ? "character__right character__form--again" : "character__right character__form--new";
+    form!.className = state === 'vote' ? CLASS_VOTED : CLASS_NOT_VOTED;
 
   }
 
+  public changeStateThumb(id: string, state: boolean){
+    let idThumb= "thumb_status_"+id;
+    let thumb = document.getElementById(idThumb)
+
+    thumb!.className = state ? CLASS_THUMB_UP : CLASS_THUMB_DOWN
+  }
 
 
 }

@@ -20,7 +20,9 @@ html, body {
 body {
     position: relative;
 }
-
+button{
+    cursor: pointer;
+}
 a, a:visited {
     color: $color-white;
 }
