@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Production
 
-You can go to `https://master.d3jdeknshs5e1.amplifyapp.com/`.
+This project was exposed through AWS Amplify and you can find it in this link: `https://master.d3jdeknshs5e1.amplifyapp.com/`.
 
 ## Development server
 
